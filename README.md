@@ -41,28 +41,30 @@ Porovnáním pořadí prodejů v Severní Americe (`na_sales_ranked`) a Japonsku
 - **Měřítko trhu:** Protože je americký trh 4–5× větší, představuje 0,5 milionu prodaných kusů v Japonsku komerční hit, zatímco v USA jde o střední třídu.
 
 ### SQL dotaz pro výpočet rozdílu pozic:
-```sql
-WITH total_sales_region AS (
+WITH `total_sales_region` AS (
     SELECT 
-        title,
-        SUM(na_sales) AS na_sales,
-        SUM(jp_sales) AS jp_sales,
-        CAST(ROW_NUMBER() OVER (ORDER BY SUM(na_sales) DESC) AS SIGNED) AS na_sales_ranked,
-        CAST(ROW_NUMBER() OVER (ORDER BY SUM(jp_sales) DESC) AS SIGNED) AS jp_sales_ranked
-    FROM games_clean
-    WHERE na_sales IS NOT NULL AND jp_sales IS NOT NULL
-    GROUP BY title
-)
+        `games_clean`.`title` AS `title`,
+        SUM(`games_clean`.`na_sales`) AS `na_sales`,
+        SUM(`games_clean`.`jp_sales`) AS `jp_sales`,
+        CAST(ROW_NUMBER() OVER (ORDER BY SUM(`games_clean`.`na_sales`) DESC) AS SIGNED) AS `na_sales_ranked`,
+        CAST(ROW_NUMBER() OVER (ORDER BY SUM(`games_clean`.`jp_sales`) DESC) AS SIGNED) AS `jp_sales_ranked` 
+    FROM `games_clean` 
+    WHERE (
+        (`games_clean`.`na_sales` IS NOT NULL) 
+        AND (`games_clean`.`jp_sales` IS NOT NULL)
+    ) 
+    GROUP BY `games_clean`.`title` 
+    ORDER BY `na_sales` DESC
+) 
 SELECT 
-    title,
-    na_sales,
-    jp_sales,
-    na_sales_ranked,
-    jp_sales_ranked,
-    (na_sales_ranked - jp_sales_ranked) AS rank_diff
-FROM total_sales_region
-ORDER BY rank_diff DESC
-LIMIT 5;
+    `total_sales_region`.`title` AS `title`,
+    `total_sales_region`.`na_sales` AS `na_sales`,
+    `total_sales_region`.`jp_sales` AS `jp_sales`,
+    `total_sales_region`.`na_sales_ranked` AS `na_sales_ranked`,
+    `total_sales_region`.`jp_sales_ranked` AS `jp_sales_ranked`,
+    (`total_sales_region`.`na_sales_ranked` - `total_sales_region`.`jp_sales_ranked`) AS `rank_diff` 
+FROM `total_sales_region` 
+ORDER BY (`total_sales_region`.`na_sales_ranked` - `total_sales_region`.`jp_sales_ranked`) DESC
 ```
 
 <img width="1180" height="371" alt="image" src="https://github.com/user-attachments/assets/42434f6d-2920-47a7-8e8a-9dd95d0c0a00" />
