@@ -41,6 +41,7 @@ Porovnáním pořadí prodejů v Severní Americe (`na_sales_ranked`) a Japonsku
 - **Měřítko trhu:** Protože je americký trh 4–5× větší, představuje 0,5 milionu prodaných kusů v Japonsku komerční hit, zatímco v USA jde o střední třídu.
 
 ### SQL dotaz pro výpočet rozdílu pozic:
+```sql
 WITH `total_sales_region` AS (
     SELECT 
         `games_clean`.`title` AS `title`,
