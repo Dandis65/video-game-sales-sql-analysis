@@ -1,6 +1,6 @@
 # Video Game Sales & Market Performance Analysis (SQL)
 
-End-to-end data analytics projekt zaměřený na profilování, čištění a analytické zpracování databáze videoherních prodejů (VGChartz). Projekt demonstruje transformaci nestrukturovaných dat do produkčního schématu a tvorbu analytických pohledů (Views) připravených pro reportingovou vrstvu v Power BI.
+End-to-end data analytics projekt zaměřený na profilování, čištění a analytické zpracování databáze videoherních prodejů (VGChartz). Projekt demonstruje transformaci nestrukturovaných dat do produkčního schématu a tvorbu Views připravených pro reportingovou vrstvu v Power BI.
 
 ---
 
